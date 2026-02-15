@@ -25,7 +25,7 @@ main() {
   for pkg in "${packages[@]}"; do
     log "Stowing package: ${pkg}"
     if [[ "$pkg" == "home" ]]; then
-      stow_package "${REPO_ROOT}" "${pkg}" "${backup_root}" '^\.config/aerospace(/.*)?$'
+      stow_package "${REPO_ROOT}" "${pkg}" "${backup_root}" '^(\.config/aerospace(/.*)?|\.tmux\.conf)$'
     else
       stow_package "${REPO_ROOT}" "${pkg}" "${backup_root}"
     fi

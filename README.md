@@ -46,11 +46,13 @@ The base installer always runs these scripts in order:
 
 ## Stow packages
 
-- `home` -> `~/.zshrc`, `~/.tmux.conf`, `~/.profile`, and `~/.config/aerospace/aerospace.toml` (macOS)
+- `home` -> `~/.zshrc`, `~/.profile`, and `~/.config/aerospace/aerospace.toml` (macOS)
 - macOS compatibility: `~/.aerospace.toml` -> `~/.config/aerospace/aerospace.toml`
 - `git` -> `~/.gitconfig`
 - `scripts` -> `~/.local/bin/*`
 - `fonts` -> `~/.fonts/*` (linked directly for idempotency)
+- `~/.tmux.conf` is owned by Oh My Tmux (`~/.tmux/.tmux.conf`)
+- custom tmux binds are managed in `~/.tmux.conf.local`
 
 Conflicting existing files are backed up to:
 
