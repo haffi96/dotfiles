@@ -1,0 +1,37 @@
+#!/usr/bin/env sh
+set -eu
+
+REPO_URL="${DOTFILES_REPO_URL:-https://github.com/haffi96/dotfiles.git}"
+REPO_BRANCH="${DOTFILES_REPO_BRANCH:-master}"
+INSTALL_DIR="${DOTFILES_INSTALL_DIR:-$HOME/.local/share/haffi-dotfiles}"
+
+run_installer() {
+  repo_dir="$1"
+  if [ ! -f "$repo_dir/custom/run_install.sh" ]; then
+    echo "Missing installer: $repo_dir/custom/run_install.sh" >&2
+    exit 1
+  fi
+  exec bash "$repo_dir/custom/run_install.sh"
+}
+
+# Local repository execution path (`./install`).
+if [ -f "./custom/run_install.sh" ]; then
+  run_installer "$(pwd)"
+fi
+
+if ! command -v git >/dev/null 2>&1; then
+  echo "git is required to bootstrap dotfiles." >&2
+  exit 1
+fi
+
+mkdir -p "$(dirname "$INSTALL_DIR")"
+if [ -d "$INSTALL_DIR/.git" ]; then
+  git -C "$INSTALL_DIR" fetch --depth 1 origin "$REPO_BRANCH"
+  git -C "$INSTALL_DIR" checkout "$REPO_BRANCH"
+  git -C "$INSTALL_DIR" pull --ff-only origin "$REPO_BRANCH"
+else
+  rm -rf "$INSTALL_DIR"
+  git clone --depth 1 --branch "$REPO_BRANCH" "$REPO_URL" "$INSTALL_DIR"
+fi
+
+run_installer "$INSTALL_DIR"
