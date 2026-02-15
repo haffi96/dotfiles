@@ -9,6 +9,7 @@ IMAGE_NAME="haffi-dotfiles-jammy-test"
 docker build -t "${IMAGE_NAME}" -f "${SCRIPT_DIR}/Dockerfile" "${REPO_ROOT}"
 
 docker run \
+  --rm \
   -t \
   -v "${REPO_ROOT}:/work/dotfiles" \
   -w /work/dotfiles \
