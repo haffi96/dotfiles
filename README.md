@@ -14,9 +14,11 @@ Or bootstrap directly from GitHub:
 
 ```bash
 curl -LsSf https://haffi.dev/dotfiles.sh | sh
+```
 
 or
 
+```bash
 curl -LsSf https://raw.githubusercontent.com/haffi96/dotfiles/master/install | sh
 ```
 
