@@ -217,3 +217,21 @@ stow_package() {
     stow -R -v --no-folding -t "${HOME}" -d "${repo_root}" "${package_name}"
   fi
 }
+
+link_tree_files() {
+  local source_root="$1"
+  local target_root="$2"
+  local backup_root="$3"
+
+  [[ -d "$source_root" ]] || return 0
+
+  while IFS= read -r source_path; do
+    local rel
+    local target_path
+    rel="${source_path#${source_root}/}"
+    target_path="${target_root}/${rel}"
+    mkdir -p "$(dirname "${target_path}")"
+    backup_conflict "${target_path}" "${backup_root}" "${source_path}"
+    ln -sfn "${source_path}" "${target_path}"
+  done < <(find "$source_root" -mindepth 1 -type f)
+}

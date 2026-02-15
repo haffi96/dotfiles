@@ -19,7 +19,7 @@ main() {
   backup_root="${HOME}/.dotfiles-backups/$(date +%Y%m%d-%H%M%S)"
   mkdir -p "${backup_root}"
 
-  local packages=(git home scripts fonts)
+  local packages=(git home scripts)
 
   local pkg
   for pkg in "${packages[@]}"; do
@@ -30,6 +30,9 @@ main() {
       stow_package "${REPO_ROOT}" "${pkg}" "${backup_root}"
     fi
   done
+
+  log "Linking managed fonts into ~/.fonts"
+  link_tree_files "${REPO_ROOT}/fonts/.fonts" "${HOME}/.fonts" "${backup_root}"
 
   log "Stow apply complete."
 }

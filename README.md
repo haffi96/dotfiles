@@ -48,7 +48,7 @@ The base installer always runs these scripts in order:
 - macOS compatibility: `~/.aerospace.toml` -> `~/.config/aerospace/aerospace.toml`
 - `git` -> `~/.gitconfig`
 - `scripts` -> `~/.local/bin/*`
-- `fonts` -> `~/.fonts/*`
+- `fonts` -> `~/.fonts/*` (linked directly for idempotency)
 
 Conflicting existing files are backed up to:
 
