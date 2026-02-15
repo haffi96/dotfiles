@@ -160,12 +160,31 @@ ensure_default_shell_zsh() {
 backup_conflict() {
   local target="$1"
   local backup_root="$2"
+  local expected_source="${3:-}"
 
-  if [[ -L "$target" ]]; then
-    return
+  if [[ -L "$target" && -n "$expected_source" ]]; then
+    local resolved_target=""
+    if command_exists realpath; then
+      resolved_target="$(realpath "$target" 2>/dev/null || true)"
+    fi
+    if [[ -z "$resolved_target" ]]; then
+      local link_value
+      link_value="$(readlink "$target" 2>/dev/null || true)"
+      if [[ -n "$link_value" ]]; then
+        if [[ "$link_value" = /* ]]; then
+          resolved_target="$link_value"
+        else
+          resolved_target="$(cd "$(dirname "$target")" && cd "$(dirname "$link_value")" && pwd)/$(basename "$link_value")"
+        fi
+      fi
+    fi
+
+    if [[ "$resolved_target" == "$expected_source" ]]; then
+      return
+    fi
   fi
 
-  if [[ -e "$target" ]]; then
+  if [[ -e "$target" || -L "$target" ]]; then
     local rel
     rel="${target#${HOME}/}"
     mkdir -p "${backup_root}/$(dirname "$rel")"
@@ -185,7 +204,7 @@ stow_package() {
   while IFS= read -r source_path; do
     local rel
     rel="${source_path#${package_path}/}"
-    backup_conflict "${HOME}/${rel}" "$backup_root"
+    backup_conflict "${HOME}/${rel}" "$backup_root" "$source_path"
   done < <(find "$package_path" -mindepth 1 -type f)
 
   stow -R -v -t "${HOME}" -d "${repo_root}" "${package_name}"
