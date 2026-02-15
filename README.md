@@ -4,23 +4,25 @@ Cross-machine bootstrap for macOS + Linux with a single shared `.zshrc`.
 
 ## Quick install
 
-Run locally from a clone:
-
-```bash
-./install
-```
-
-Or bootstrap directly from GitHub:
+Run the following command to install the dotfiles:
 
 ```bash
 curl -LsSf https://haffi.dev/dotfiles.sh | sh
 ```
 
-or
+Or bootstrap directly from GitHub:
 
 ```bash
 curl -LsSf https://raw.githubusercontent.com/haffi96/dotfiles/master/install | sh
 ```
+or run locally from a clone:
+
+```bash
+git clone https://github.com/haffi96/dotfiles.git
+cd dotfiles
+./install
+```
+
 
 ## What the installer does
 
