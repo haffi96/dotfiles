@@ -13,6 +13,10 @@ Run locally from a clone:
 Or bootstrap directly from GitHub:
 
 ```bash
+curl -LsSf https://haffi.dev/dotfiles.sh | sh
+
+or
+
 curl -LsSf https://raw.githubusercontent.com/haffi96/dotfiles/master/install | sh
 ```
 
@@ -38,12 +42,11 @@ The base installer always runs these scripts in order:
 
 ## Stow packages
 
-- `zsh` -> `~/.zshrc` (single global config across platforms)
+- `home` -> `~/.zshrc`, `~/.tmux.conf`, `~/.profile`, and `~/.config/aerospace/aerospace.toml` (macOS)
+- macOS compatibility: `~/.aerospace.toml` -> `~/.config/aerospace/aerospace.toml`
 - `git` -> `~/.gitconfig`
-- `tmux` -> `~/.tmux.conf`
 - `scripts` -> `~/.local/bin/*`
 - `fonts` -> `~/.fonts/*`
-- `aerospace` (only if added as package; macOS script also links root `.aerospace.toml`)
 
 Conflicting existing files are backed up to:
 

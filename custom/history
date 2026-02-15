@@ -1,0 +1,8 @@
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=999999999
+SAVEHIST="$HISTSIZE"
+
+if [ -n "${ZSH_VERSION:-}" ]; then
+  setopt APPEND_HISTORY
+  unsetopt share_history
+fi

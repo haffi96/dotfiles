@@ -19,15 +19,16 @@ main() {
   backup_root="${HOME}/.dotfiles-backups/$(date +%Y%m%d-%H%M%S)"
   mkdir -p "${backup_root}"
 
-  local packages=(git zsh tmux scripts fonts)
-  if [[ "${PLATFORM_OS}" == "macos" ]]; then
-    packages+=(aerospace)
-  fi
+  local packages=(git home scripts fonts)
 
   local pkg
   for pkg in "${packages[@]}"; do
     log "Stowing package: ${pkg}"
-    stow_package "${REPO_ROOT}" "${pkg}" "${backup_root}"
+    if [[ "$pkg" == "home" && "${PLATFORM_OS}" != "macos" ]]; then
+      stow_package "${REPO_ROOT}" "${pkg}" "${backup_root}" '^\.config/aerospace/aerospace\.toml$'
+    else
+      stow_package "${REPO_ROOT}" "${pkg}" "${backup_root}"
+    fi
   done
 
   log "Stow apply complete."

@@ -197,6 +197,7 @@ stow_package() {
   local repo_root="$1"
   local package_name="$2"
   local backup_root="$3"
+  local stow_ignore_regex="${4:-}"
   local package_path="${repo_root}/${package_name}"
 
   [[ -d "$package_path" ]] || return 0
@@ -204,8 +205,15 @@ stow_package() {
   while IFS= read -r source_path; do
     local rel
     rel="${source_path#${package_path}/}"
+    if [[ -n "$stow_ignore_regex" ]] && [[ "$rel" =~ $stow_ignore_regex ]]; then
+      continue
+    fi
     backup_conflict "${HOME}/${rel}" "$backup_root" "$source_path"
   done < <(find "$package_path" -mindepth 1 -type f)
 
-  stow -R -v -t "${HOME}" -d "${repo_root}" "${package_name}"
+  if [[ -n "$stow_ignore_regex" ]]; then
+    stow -R -v --ignore="$stow_ignore_regex" -t "${HOME}" -d "${repo_root}" "${package_name}"
+  else
+    stow -R -v -t "${HOME}" -d "${repo_root}" "${package_name}"
+  fi
 }

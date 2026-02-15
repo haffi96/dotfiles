@@ -24,4 +24,5 @@ run_sudo apt-get install -y \
   git \
   stow \
   sudo \
-  zsh
+  zsh \
+  openssh-server

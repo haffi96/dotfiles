@@ -16,10 +16,11 @@ ensure_package git
 ensure_package curl
 ensure_package stow
 
-if [[ -f "${REPO_ROOT}/.aerospace.toml" ]]; then
-  local_backup_root="${HOME}/.dotfiles-backups/$(date +%Y%m%d-%H%M%S)"
-  mkdir -p "${local_backup_root}"
-  backup_conflict "${HOME}/.aerospace.toml" "${local_backup_root}"
-  ln -sfn "${REPO_ROOT}/.aerospace.toml" "${HOME}/.aerospace.toml"
-  log "Linked AeroSpace config."
-fi
+local_backup_root="${HOME}/.dotfiles-backups/$(date +%Y%m%d-%H%M%S)"
+mkdir -p "${local_backup_root}"
+
+xdg_aerospace_conf="${HOME}/.config/aerospace/aerospace.toml"
+legacy_aerospace_conf="${HOME}/.aerospace.toml"
+backup_conflict "${legacy_aerospace_conf}" "${local_backup_root}" "${xdg_aerospace_conf}"
+ln -sfn "${xdg_aerospace_conf}" "${legacy_aerospace_conf}"
+log "Linked compatibility AeroSpace config: ${legacy_aerospace_conf} -> ${xdg_aerospace_conf}"
