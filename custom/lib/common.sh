@@ -212,8 +212,8 @@ stow_package() {
   done < <(find "$package_path" -mindepth 1 -type f)
 
   if [[ -n "$stow_ignore_regex" ]]; then
-    stow -R -v --ignore="$stow_ignore_regex" -t "${HOME}" -d "${repo_root}" "${package_name}"
+    stow -R -v --no-folding --ignore="$stow_ignore_regex" -t "${HOME}" -d "${repo_root}" "${package_name}"
   else
-    stow -R -v -t "${HOME}" -d "${repo_root}" "${package_name}"
+    stow -R -v --no-folding -t "${HOME}" -d "${repo_root}" "${package_name}"
   fi
 }

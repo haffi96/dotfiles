@@ -24,8 +24,8 @@ main() {
   local pkg
   for pkg in "${packages[@]}"; do
     log "Stowing package: ${pkg}"
-    if [[ "$pkg" == "home" && "${PLATFORM_OS}" != "macos" ]]; then
-      stow_package "${REPO_ROOT}" "${pkg}" "${backup_root}" '^\.config/aerospace/aerospace\.toml$'
+    if [[ "$pkg" == "home" ]]; then
+      stow_package "${REPO_ROOT}" "${pkg}" "${backup_root}" '^\.config/aerospace(/.*)?$'
     else
       stow_package "${REPO_ROOT}" "${pkg}" "${backup_root}"
     fi
