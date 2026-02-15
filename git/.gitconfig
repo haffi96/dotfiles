@@ -2,4 +2,4 @@
 	email = haffimazhar96@gmail.com
 	name = Haffi Mazhar
 [core]
-	editor = code --wait
+	editor = nvim
