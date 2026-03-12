@@ -54,3 +54,24 @@ if [[ -s "$HOME/.nvm/nvm.sh" ]]; then
     . "$NVM_DIR/bash_completion"
   fi
 fi
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/haffi.mazhar/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/haffi.mazhar/google-cloud-sdk/path.zsh.inc'; fi
+
+# pnpm
+export PNPM_HOME="/Users/haffi.mazhar/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
+# opencode
+export PATH=/Users/haffi.mazhar/.opencode/bin:$PATH
+export VERTEX_LOCATION=global
+export GOOGLE_CLOUD_PROJECT="oxa-dev-ra-pl"
+
+# pyenv
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init - zsh)"
