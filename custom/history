@@ -4,5 +4,8 @@ SAVEHIST="$HISTSIZE"
 
 if [ -n "${ZSH_VERSION:-}" ]; then
   setopt APPEND_HISTORY
-  unsetopt share_history
+  setopt SHARE_HISTORY
+  setopt EXTENDED_HISTORY
+  setopt INC_APPEND_HISTORY
+  setopt HIST_EXPIRE_DUPS_FIRST
 fi

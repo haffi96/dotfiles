@@ -1,13 +1,7 @@
 # Place a copy of this config to ~/.config/aerospace/aerospace.toml
 # After that, you can edit ~/.config/aerospace/aerospace.toml to your liking
 
-# You can use it to add commands that run after login to macOS user session.
-# 'start-at-login' needs to be 'true' for 'after-login-command' to work
-# Available commands: https://nikitabobko.github.io/AeroSpace/commands
-after-login-command = []
-
 # You can use it to add commands that run after AeroSpace startup.
-# 'after-startup-command' is run after 'after-login-command'
 # Available commands : https://nikitabobko.github.io/AeroSpace/commands
 after-startup-command = []
 
@@ -194,6 +188,10 @@ if.app-id = 'md.obsidian'
 run = ['move-node-to-workspace 5']
 
 [[on-window-detected]]
+if.app-id = 'com.t3tools.t3code'
+run = ['move-node-to-workspace 5']
+
+[[on-window-detected]]
 if.app-id = 'com.fortinet.FortiClient'
 run = ['layout floating', 'move-node-to-workspace 6']
 
@@ -237,4 +235,16 @@ run = ['layout floating']
 
 [[on-window-detected]]
 if.app-id = 'com.apple.clock'
+run = ['layout floating']
+
+[[on-window-detected]]
+if.app-id = 'com.electron.wispr-flow'
+run = ['layout floating']
+
+[[on-window-detected]]
+if.app-id = 'com.electron.wispr-flow.accessibility-mac-app'
+run = ['layout floating']
+
+[[on-window-detected]]
+if.app-id = 'com.electron.wispr-flow.helper'
 run = ['layout floating']
